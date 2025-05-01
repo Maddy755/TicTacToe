@@ -21,6 +21,8 @@ def print_board(board):
         print("-" * 5)
 
 def bot_ai(board,opponent):
+    player="X" if opponent =="O" else "O"
+
     #Check winning moves
     for i in range(3):
         for j in range(3):
@@ -37,6 +39,32 @@ def bot_ai(board,opponent):
                 if check_winner(board,"X" if opponent=="O" else "O"):
                     return (i,j)
                 board[i][j]=" "
+    #Block opponet forks
+    for i in range(3):
+         for j in range(3):
+              count1=0
+              if board[i][j]==" ":
+                   board[i][j]=player
+                   for x in range(3):
+                        for y in range(3):
+                             if board[x][y]==" ":
+                                board[x][y]=player
+                                if check_winner(board,player):
+                                     count1+=1
+                                board[x][y]=" "
+                   board[i][j]=" "
+              if count1>=2:
+                    if board[0][1]==" ":
+                        return (0,1)
+                    elif board[1][0]==" ":
+                        return (1,0)
+                    elif board[1][2]==" ":
+                        return(1,2)
+                    elif board[2][1]==" ":
+                        return (2,1)
+    
+         
+                        
     #Scans for potential forks
     for i in range(3):
          for j in range(3):
